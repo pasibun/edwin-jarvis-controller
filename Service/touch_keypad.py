@@ -57,4 +57,4 @@ class ControlBoard(object):
             print("Y")
             return ControlBoardTypes.DEFAULT
         else:
-            return ControlBoardTypes.DEFAULT
+            return None

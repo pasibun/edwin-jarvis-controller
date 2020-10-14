@@ -8,15 +8,15 @@ class EdwinJarvisController(object):
     control_board = ControlBoard()
 
     def controller(self):
-        value = self.control_board.keypad_input()
-        print(value)
         while True:
-            if value == ControlBoardTypes.RIGHT or value == ControlBoardTypes.LEFT:
-                self.mqtt.send_msg(self.mqtt.MQTT_TOPIC_BASE, value.name)
-            elif value == ControlBoardTypes.UP or value == ControlBoardTypes.DOWN:
-                self.mqtt.send_msg(self.mqtt.MQTT_TOPIC_FIRST_AXIS, value.name)
-            else:
-                self.mqtt.send_msg(self.mqtt.MQTT_TOPIC, value.name)
+            value = self.control_board.keypad_input()
+            if value is not None:
+                if value == ControlBoardTypes.RIGHT or value == ControlBoardTypes.LEFT:
+                    self.mqtt.send_msg(self.mqtt.MQTT_TOPIC_BASE, value.name)
+                elif value == ControlBoardTypes.UP or value == ControlBoardTypes.DOWN:
+                    self.mqtt.send_msg(self.mqtt.MQTT_TOPIC_FIRST_AXIS, value.name)
+                else:
+                    self.mqtt.send_msg(self.mqtt.MQTT_TOPIC, value.name)
 
 
 if __name__ == "__main__":
