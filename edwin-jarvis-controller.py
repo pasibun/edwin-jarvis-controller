@@ -11,6 +11,7 @@ class EdwinJarvisController(object):
         while True:
             value = self.control_board.keypad_input()
             if value is not None:
+                print(value)
                 if value == ControlBoardTypes.RIGHT or value == ControlBoardTypes.LEFT:
                     self.mqtt.send_msg(self.mqtt.MQTT_TOPIC_BASE, value.name)
                 elif value == ControlBoardTypes.UP or value == ControlBoardTypes.DOWN:
