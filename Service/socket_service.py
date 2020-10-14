@@ -6,6 +6,9 @@ class Socket(object):
     PORT = 1337
 
     def send_socket(self, input):
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.connect((self.HOST, self.PORT))
-            s.sendall(input.encode())
+        client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client.connect((self.HOST, self.PORT))
+        client.send(input.encode())
+        from_server = client.recv(4096)
+        client.close()
+        print(from_server)
