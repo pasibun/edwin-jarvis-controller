@@ -6,7 +6,9 @@ from Domain.control_board_types_enum import ControlBoardTypes
 
 
 class ControlBoard(object):
-    tp = CDLL(os.path.dirname(__file__) + '../resources/TTP229.so')
+    file_dir =os.path.dirname(__file__)
+    filename = os.path.join(file_dir, '../resources/TTP229.so')
+    tp = CDLL(os.path.abspath(os.path.realpath(filename)))
 
     def keypad_input(self):
         val = self.tp.TTP229_GetVal()
