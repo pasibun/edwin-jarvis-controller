@@ -12,7 +12,7 @@ class ControlBoard(object):
 
     def keypad_input(self):
         val = self.tp.TTP229_GetVal()
-        time.sleep(0.05)
+        time.sleep(0.0005)
         if val & 1:
             print("O")
             return ControlBoardTypes.DEFAULT
