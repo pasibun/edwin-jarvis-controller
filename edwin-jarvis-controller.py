@@ -1,10 +1,12 @@
 from Domain.control_board_types_enum import ControlBoardTypes
 from Service.mqtt_service import MqttService
+from Service.socket_service import Socket
 from Service.touch_keypad import ControlBoard
 
 
 class EdwinJarvisController(object):
-    mqtt = MqttService()
+    # mqtt = MqttService()
+    socket = Socket()
     control_board = ControlBoard()
 
     def controller(self):
@@ -12,12 +14,13 @@ class EdwinJarvisController(object):
             value = self.control_board.keypad_input()
             if value is not None:
                 print(value)
-                if value == ControlBoardTypes.RIGHT or value == ControlBoardTypes.LEFT:
-                    self.mqtt.send_msg(self.mqtt.MQTT_TOPIC_BASE, value.name)
-                elif value == ControlBoardTypes.UP or value == ControlBoardTypes.DOWN:
-                    self.mqtt.send_msg(self.mqtt.MQTT_TOPIC_FIRST_AXIS, value.name)
-                else:
-                    self.mqtt.send_msg(self.mqtt.MQTT_TOPIC, value.name)
+                self.socket.send_socket(value.name)
+                # if value == ControlBoardTypes.RIGHT or value == ControlBoardTypes.LEFT:
+                #     self.mqtt.send_msg(self.mqtt.MQTT_TOPIC_BASE, value.name)
+                # elif value == ControlBoardTypes.UP or value == ControlBoardTypes.DOWN:
+                #     self.mqtt.send_msg(self.mqtt.MQTT_TOPIC_FIRST_AXIS, value.name)
+                # else:
+                #     self.mqtt.send_msg(self.mqtt.MQTT_TOPIC, value.name)
 
 
 if __name__ == "__main__":
