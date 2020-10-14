@@ -8,7 +8,7 @@ class EdwinJarvisController(object):
     control_board = ControlBoard()
 
     def controller(self):
-        value = self.control_board.keypad_input
+        value = self.control_board.keypad_input()
         print(value)
         if value == ControlBoardTypes.RIGHT or value == ControlBoardTypes.LEFT:
             self.mqtt.send_msg(self.mqtt.MQTT_TOPIC_BASE, value)
