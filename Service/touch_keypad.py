@@ -1,11 +1,12 @@
 from ctypes import *
 import time
+import os.path
 
 from Domain.control_board_types_enum import ControlBoardTypes
 
 
 class ControlBoard(object):
-    tp = CDLL('../resources/TTP229.so')
+    tp = CDLL(os.path.dirname(__file__) + '../resources/TTP229.so')
 
     def keypad_input(self):
         val = self.tp.TTP229_GetVal()
