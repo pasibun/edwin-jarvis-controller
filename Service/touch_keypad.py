@@ -10,7 +10,7 @@ class ControlBoard(object):
     filename = os.path.join(file_dir, '../resources/TTP229.so')
     tp = CDLL(os.path.abspath(os.path.realpath(filename)))
 
-    def keypad_input(self):
+    def get_key_press(self):
         val = self.tp.TTP229_GetVal()
         if val & 1:
             print("O")
