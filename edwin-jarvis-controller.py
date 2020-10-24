@@ -6,18 +6,32 @@ from Service.touch_keypad import ControlBoard
 class EdwinJarvisController(object):
     mqtt = MqttService()
     control_board = ControlBoard()
+    current_value = None
+    current_topic = None
 
     def controller(self):
         while True:
             value = self.control_board.get_key_press()
-            if value is not None:
+            if self.value_checker(value):
                 print(value)
                 if value == ControlBoardTypes.RIGHT or value == ControlBoardTypes.LEFT:
+                    self.current_topic = self.mqtt.MQTT_TOPIC_BASE
                     self.mqtt.send_msg(self.mqtt.MQTT_TOPIC_BASE, value.name)
                 elif value == ControlBoardTypes.UP or value == ControlBoardTypes.DOWN:
+                    self.current_topic = self.mqtt.MQTT_TOPIC_FIRST_AXIS
                     self.mqtt.send_msg(self.mqtt.MQTT_TOPIC_FIRST_AXIS, value.name)
-                else:
-                    self.mqtt.send_msg(self.mqtt.MQTT_TOPIC, value.name)
+            elif self.current_value is not None:
+                print('button release.')
+                self.mqtt.send_msg(self.current_topic, 'Done')
+                self.current_value = None
+                self.current_topic = None
+
+    def value_checker(self, value):
+        if value is not None and value is not self.current_value:
+            self.current_value = value
+            return True
+        else:
+            return False
 
 
 if __name__ == "__main__":
