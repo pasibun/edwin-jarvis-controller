@@ -21,7 +21,7 @@ class EdwinJarvisController(object):
                     self.mqtt.send_msg(self.mqtt.MQTT_TOPIC_FIRST_AXIS, value.name)
             elif self.current_topic is not None and value is None:
                 print('button release.')
-                self.mqtt.send_msg(self.mqtt.MQTT_TOPIC, ControlBoardTypes.DONE)
+                self.mqtt.send_msg(self.mqtt.MQTT_TOPIC, ControlBoardTypes.DONE.name)
                 self.current_value = None
                 self.current_topic = None
 
