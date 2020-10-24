@@ -8,6 +8,7 @@ class ControlBoardTypes(Enum):
     UP = 3,
     DOWN = 4,
     DEFAULT = 5,
+    DONE = 9
 
     @classmethod
     def _missing_(cls, value):
