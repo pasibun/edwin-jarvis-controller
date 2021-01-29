@@ -1,12 +1,13 @@
 from Domain.application_types import ApplicationTypes
 from Domain.control_board_types import ControlBoardTypes
 from Domain.hexapod_movement_types import HexapodMovementTypes
-from Service.display_service import show_msg, show_long_msg
+from Service.display_service import DisplayService
 from Service.mqtt_service import MqttService
 from Service.touch_keypad_service import TouchKeypadService
 
 
 class EJControllerService(object):
+    dp = DisplayService()
     mqtt = MqttService()
     control_board = TouchKeypadService()
     current_value = None
@@ -18,15 +19,15 @@ class EJControllerService(object):
     def __init__(self):
         print("Init Controller")
         self.choose_application()
-        show_msg("Ready to move.")
+        self.dp.show_msg("Ready to move.")
         self.controller()
 
     def choose_application(self):
-        show_msg("Press + for Hexapod.\nPress - for Robotarm")
+        self.dp.show_msg("Press + for Hexapod.\nPress - for Robotarm")
         while True:
             value = self.control_board.get_key_press()
             if value == ControlBoardTypes.HEXAPOD or value == ControlBoardTypes.ROBOTARM:
-                show_msg("Thank you.\nPreparing communication.")
+                self.dp.show_msg("Thank you.\nPreparing communication.")
                 if value == ControlBoardTypes.HEXAPOD:
                     self.application = ApplicationTypes.HEXAPOD
                     self.movement_topic = self.mqtt.MQTT_TOPIC_HEXAPOD_MOVEMENT
@@ -38,7 +39,7 @@ class EJControllerService(object):
                     self.method_topic = self.mqtt.MQTT_TOPIC_ROBOTARM_METHODE
                 break
             else:
-                show_msg("Please choose again.")
+                self.dp.show_msg("Please choose again.")
 
     def controller(self):
         while True:

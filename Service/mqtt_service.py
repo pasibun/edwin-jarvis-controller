@@ -2,10 +2,11 @@ import getpass
 
 import paho.mqtt.client as mqtt
 
-from Service.display_service import show_msg
+from Service.display_service import DisplayService
 
 
 class MqttService(object):
+    dp = DisplayService()
     client = mqtt.Client("edwin-jarvis-controller")
     MQTT_HOST = "10.0.0.109"
     MQTT_USERNAME = ""
@@ -22,7 +23,7 @@ class MqttService(object):
 
     def make_connection(self):
         self.enter_credentials()
-        show_msg("Making connection with mqtt service.")
+        self.dp.show_msg("Making connection with mqtt service.")
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
         self.client.username_pw_set(username=self.MQTT_USERNAME, password=self.MQTT_PASSWORD)
@@ -32,24 +33,24 @@ class MqttService(object):
 
     def enter_credentials(self):
         try:
-            show_msg("Enter username for the MQTT connection:")
+            self.dp.show_msg("Enter username for the MQTT connection:")
             self.MQTT_USERNAME = input()
-            show_msg("Enter password for the MQTT connection:")
+            self.dp.show_msg("Enter password for the MQTT connection:")
             self.MQTT_PASSWORD = getpass.getpass()
-            show_msg("Press y to confirm.")
+            self.dp.show_msg("Press y to confirm.")
             result = input()
             if not result.isdigit() and result.lower() != "y":
-                show_msg("Lets try that again..")
+                self.dp.show_msg("Lets try that again..")
                 self.enter_credentials()
         except ValueError:
-            show_msg("Wrong fucking input retard.")
+            self.dp.show_msg("Wrong fucking input retard.")
 
     def on_connect(self, client, userdata, flags, rc):
         if rc == 0:
             self.client.connected_flag = True
-            show_msg("connected ok")
+            self.dp.show_msg("connected ok")
         else:
-            show_msg("Bad connection Returned code= ", rc)
+            self.dp.show_msg("Bad connection Returned code= ", rc)
 
     def on_message(self, client, userdata, message):
         print("TODO")
