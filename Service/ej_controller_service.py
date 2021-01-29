@@ -1,3 +1,5 @@
+import time
+
 from Domain.application_types import ApplicationTypes
 from Domain.control_board_types import ControlBoardTypes
 from Domain.hexapod_movement_types import HexapodMovementTypes
@@ -19,15 +21,16 @@ class EJControllerService(object):
     def __init__(self):
         print("Init Controller")
         self.choose_application()
+        time.sleep(2)
         self.dp.show_msg("Ready to move.")
         self.controller()
 
     def choose_application(self):
-        self.dp.show_msg("Press + for Hexapod.\nPress - for Robotarm")
+        self.dp.show_msg("Press + for Hexapod\nPress - for Robotarm")
         while True:
             value = self.control_board.get_key_press()
             if value == ControlBoardTypes.HEXAPOD or value == ControlBoardTypes.ROBOTARM:
-                self.dp.show_msg("Thank you.\nPreparing communication.")
+                self.dp.show_msg("Thank you\nPreparing communication.")
                 if value == ControlBoardTypes.HEXAPOD:
                     self.application = ApplicationTypes.HEXAPOD
                     self.movement_topic = self.mqtt.MQTT_TOPIC_HEXAPOD_MOVEMENT

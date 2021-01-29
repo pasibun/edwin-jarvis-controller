@@ -35,8 +35,12 @@ class DisplayService(object):
     def show_msg(self, msg):
         self.lcd.show_cursor(False)
         self.lcd.clear()
-        if len(msg) > 15:
-            self.show_long_msg(msg)
+        message = msg.split('\n')
+        if len(message) > 1:
+            if len(message[0]) > 15 or len(message[1]) > 15:
+                self.show_long_msg(msg)
+            else:
+                self.lcd.message(msg)
         else:
             self.lcd.message(msg)
 
