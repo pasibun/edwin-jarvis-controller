@@ -3,11 +3,14 @@ from Service.mqtt_service import MqttService
 from Service.touch_keypad import ControlBoard
 
 
-class EdwinJarvisController(object):
+class EJController(object):
     mqtt = MqttService()
     control_board = ControlBoard()
     current_value = None
     current_topic = None
+
+    def __init__(self):
+        print("Init Controller")
 
     def controller(self):
         while True:
