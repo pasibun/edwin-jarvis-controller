@@ -1,11 +1,10 @@
+import os
 from ctypes import CDLL
 
-import RPi.GPIO as GPIO
-import os
 from Domain.control_board_types import ControlBoardTypes
 
 
-class ControlBoard(object):
+class TouchKeypadService(object):
     file_dir = os.path.dirname(__file__)
     filename = os.path.join(file_dir, '../resources/TTP229.so')
     tp = CDLL(os.path.abspath(os.path.realpath(filename)))
@@ -57,28 +56,3 @@ class ControlBoard(object):
             return ControlBoardTypes.DEFAULT
         else:
             return None
-
-    #
-    # inputKeys = 16
-    # keyPressed = 0
-    # SCLPin = 6
-    # SDOPin = 5
-    #
-    # def __init__(self):
-    #     GPIO.setmode(GPIO.BCM)
-    #     GPIO.setup(self.SCLPin, GPIO.OUT)
-    #     GPIO.setup(self.SDOPin, GPIO.IN)
-    #
-    # def get_key_press(self):
-    #     button = 0
-    #     key_state = 0
-    #     for i in range(self.inputKeys):
-    #         GPIO.output(self.SCLPin, GPIO.LOW)
-    #         if not GPIO.input(self.SDOPin):
-    #             key_state = i + 1
-    #         GPIO.output(self.SCLPin, GPIO.HIGH)
-    #
-    #     if key_state > 0 and key_state != self.keyPressed:
-    #         button = key_state
-    #     self.keyPressed = key_state
-    #     return ControlBoardTypes(button)
