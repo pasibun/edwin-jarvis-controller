@@ -2,7 +2,7 @@ from ctypes import CDLL
 
 import RPi.GPIO as GPIO
 import os
-from Domain.control_board_types_enum import ControlBoardTypes
+from Domain.control_board_types import ControlBoardTypes
 
 
 class ControlBoard(object):

@@ -1,4 +1,4 @@
-from Domain.control_board_types_enum import ControlBoardTypes
+from Domain.control_board_types import ControlBoardTypes
 from Service.mqtt_service import MqttService
 from Service.touch_keypad import ControlBoard
 
@@ -32,9 +32,3 @@ class EdwinJarvisController(object):
             return True
         else:
             return False
-
-
-if __name__ == "__main__":
-    print("Init Edwin jarvis controller")
-    edwin = EdwinJarvisController()
-    edwin.controller()
