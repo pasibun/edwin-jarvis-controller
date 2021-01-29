@@ -9,8 +9,10 @@ class MqttService(object):
     MQTT_USERNAME = ""
     MQTT_PASSWORD = ""
     MQTT_TOPIC = "edwin/jarvis/set"
-    MQTT_TOPIC_BASE = "edwin/jarvis/control/base/set"
-    MQTT_TOPIC_FIRST_AXIS = "edwin/jarvis/control/first/axis/set"
+    MQTT_TOPIC_ROBOTARM_MOVEMENT = "edwin/jarvis/robotarm/movement/set"
+    MQTT_TOPIC_ROBOTARM_METHODE = "edwin/jarvis/robotarm/movement/methode/set"
+    MQTT_TOPIC_HEXAPOD_MOVEMENT = "edwin/jarvis/hexapod/movement/set"
+    MQTT_TOPIC_HEXAPOD_METHODE = "edwin/jarvis/hexapod/movement/method/set"
 
     def __init__(self):
         print("init mqtt service")

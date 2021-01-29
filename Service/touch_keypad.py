@@ -28,10 +28,10 @@ class ControlBoard(object):
             return ControlBoardTypes.HOME
         elif val & 32:
             print("+")
-            return ControlBoardTypes.DEFAULT
+            return ControlBoardTypes.HEXAPOD
         elif val & 64:
             print("-")
-            return ControlBoardTypes.DEFAULT
+            return ControlBoardTypes.ROBOTARM
         elif val & 128:
             print("L")
             return ControlBoardTypes.DEFAULT
